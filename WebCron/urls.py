@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Generator import views
+from Generator import views as generator_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name="CreateCronJob"),
+    path('', generator_views.index, name="CreateCronJob"),
 ]
