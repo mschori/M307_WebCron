@@ -12,7 +12,9 @@ class CronJob(models.Model):
     exec_day = models.CharField(max_length=255, null=False, default='')
     exec_month = models.CharField(max_length=255, null=False, default='')
     exec_weekday = models.CharField(max_length=255, null=False, default='')
-    allert_type = models.CharField(max_length=255, default=True)
+    allert_failed = models.BooleanField(default=False)
+    allert_success_after_failed = models.BooleanField(default=False)
+    allert_too_much_fails = models.BooleanField(default=False)
     save_response = models.BooleanField(default=True)
 
 

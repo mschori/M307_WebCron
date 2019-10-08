@@ -1,0 +1,174 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{% static 'generator/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'generator/css/style.css' %}">
+
+    <script src="{% static '/generator/js/jQuery.min.js' %}"></script>
+    <script src="{% static '/generator/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/generator/js/script.js' %}"></script>
+
+    <title>CronJob erstellen</title>
+</head>
+<body>
+
+<header>
+    <div class="container mt-5">
+        <h1 class="disabled">CronJob erstellen</h1>
+    </div>
+</header>
+
+<div class="container mt-4" id="alerts">
+</div>
+
+<div class="container mt-1">
+    <form action="#" method="post">
+        {% csrf_token %}
+
+        <div>
+            <p>Füllen Sie das folgende Formular aus, um einen Cron-Job anzulegen. Es werden sowohl http- als auch
+                https-URLs unterstützt. Falls die URL mit HTTP-Authentifizierung gesichet ist (z.B.
+                ".htaccess"-Passwortschutz), hinterlegen Sie bitte auch die entsprechenden Zugansdaten, damit wir die
+                Webseite korrekt abrufen können.</p>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                Titel und Adresse
+            </div>
+            <div class="card-body">
+                <input type="text" placeholder="Mein Cron-Job" id="title" class="form-control" name="title" required>
+                <input type="text" placeholder="http://" id="url" class="form-control mt-3" name="url" required>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="authenticationToggle"
+                           onclick="toggleAuthentication()">
+                    <label class="custom-control-label" for="authenticationToggle">Erfordert
+                        HTTP-Authentifizierung</label>
+                </div>
+            </div>
+            <div class="collapse card-body" id="authentication">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="username">Benutzername</label>
+                        <input type="text" placeholder="Michael" id="username" class="form-control" name="auth_user">
+                    </div>
+                    <div class="col">
+                        <label for="password">Passwort</label>
+                        <input type="password" placeholder="sml12345" id="password" class="form-control"
+                               name="auth_password">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                Ausführung
+            </div>
+            <div class="card-body">
+                <div class="ml-3">
+                    <div class="row align-items-center">
+                        <input type="radio" id="minutely" name="execute" value="minutely"
+                               onchange="handleInputExecution()">
+                        <label for="minutely" class="ml-1 mt-1">Alle</label>
+                        <input type="number" id="minutely_minutes" name="minutely_minutes" class="form-control-sm ml-3"
+                               style="width: 60px;" min="0" max="59" value="0">
+                        <label for="minutely_minutes" class="mt-1 ml-2">Minute(n)</label>
+                    </div>
+                    <div class="row align-items-center">
+                        <input type="radio" id="daily" name="execute" value="daily" onchange="handleInputExecution()">
+                        <label for="daily" class="ml-1 mt-1">Jeden Tag um</label>
+                        <input type="number" id="daily_hour" name="daily_hour" class="form-control-sm ml-3 mr-3"
+                               style="width: 60px;" min="0" max="23" value="0">
+                        :
+                        <input type="number" id="daily_minutes" name="daily_minutes" class="form-control-sm ml-3"
+                               style="width: 60px;" min="0" max="59" value="0">
+                    </div>
+                    <div class="row align-items-center">
+                        <input type="radio" id="monthly" name="execute" value="monthly"
+                               onchange="handleInputExecution()">
+                        <label for="monthly" class="ml-1 mt-1">Immer am</label>
+                        <input type="number" id="monthly_day" name="monthly_day" class="form-control-sm ml-3 mr-3"
+                               style="width: 60px;" min="1" max="30" value="1">
+                        des Monats um
+                        <input type="number" id="monthly_hour" name="monthly_minutes" class="form-control-sm ml-3 mr-3"
+                               style="width: 60px;" min="0" max="23" value="0">
+                        :
+                        <input type="number" id="monthly_minutes" name="monthly_minutes" class="form-control-sm ml-3"
+                               style="width: 60px;" min="0" max="59" value="0">
+                    </div>
+                    <div class="row align-items-center">
+                        <input type="radio" id="custom" name="execute" value="custom" onchange="handleInputExecution()">
+                        <label for="custom" class="ml-1 mt-1">Benutzerdefiniert</label>
+                        <div id="customInput">
+                            <input type="text" id="custom_input" name="custom_input" class="form-control-sm ml-3"
+                                   placeholder="0 1 1-7 12 1">
+                            <span class="ml-2 font-italic">Bitte <a href="https://de.wikipedia.org/wiki/Cron"
+                                                                    target="_blank">CronTab-Norm</a> verwenden!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                Benachrichtigungen
+            </div>
+            <div class="card-body">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="alert_failed" name="alert_failed">
+                    <label class="custom-control-label" for="alert_failed">Fehlschlag des Jobs</label>
+                </div>
+                <div class="custom-control custom-switch mt-2">
+                    <input type="checkbox" class="custom-control-input" id="alert_success_after_failed"
+                           name="alert_success_after_failed">
+                    <label class="custom-control-label" for="alert_success_after_failed">erfolgreichem Abruf nach
+                        vorherigem Fehlschlag</label>
+                </div>
+                <div class="custom-control custom-switch mt-2">
+                    <input type="checkbox" class="custom-control-input" id="alert_too_much_fails"
+                           name="alert_too_much_fails">
+                    <label class="custom-control-label" for="alert_too_much_fails">automatischer Deaktivierung wegen zu
+                        vieler Fehlschläge</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                Allgemein
+            </div>
+            <div class="card-body">
+                <div class="custom-control custom-switch mt-2">
+                    <input type="checkbox" class="custom-control-input" id="save_response" name="save_response">
+                    <label class="custom-control-label" for="save_response">Antwort speichern</label>
+                </div>
+            </div>
+        </div>
+
+
+        <p class="mt-4">Mit der Erstellung des Cron-Jobs erklären Sie, dass Sie entweder der Inhaber der abzurufenden
+            Webseite sind oder im Einverständnis des Inhabers handeln.</p>
+
+        <button type="button" class="btn btn-dark mt-3 mb-5" onclick="submit_check()">CronJob erstellen</button>
+    </form>
+
+</div>
+
+
+</body>
+
+
+</html>
