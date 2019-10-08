@@ -85,7 +85,8 @@ function scrollToTop() {
 
 function submit_check() {
     let url = $("#url").val();
-    let regex = /^http[s]?:\/\/[\S]+[.][\S]+$/;
+    let regexUrl = /^http[s]?:\/\/[\S]+[.][\S]+$/;
+    let regexCronJob = /^[\S]+[\s][\S0-9]+[\s][\S0-9]+[\s][\S0-9]+[\s][\S0-9]+$/
 
     if (!$("#title").val()) {
         show_alert_danger('Bitte einen Titel eingeben!');
@@ -96,7 +97,7 @@ function submit_check() {
         $("#title").removeClass('is-invalid').addClass('is-valid');
     }
 
-    if (regex.test(url) === false) {
+    if (regexUrl.test(url) === false) {
         show_alert_danger('Die eingegebene URL ist nicht gültig!');
         $("#url").removeClass('is-valid').addClass('is-invalid');
         scrollToTop();
@@ -104,4 +105,15 @@ function submit_check() {
     } else {
         $("#url").removeClass('is-invalid').addClass('is-valid');
     }
+    if ($('#custom').is(':checked')) {
+        let customInput = $("#custom_input").val();
+        if (regexCronJob.test(customInput) === false) {
+            show_alert_danger('Die eingegebene CronTab-Norm ist nicht gültig!')
+            $("#custom_input").removeClass('is-valid').addClass('is-invalid');
+            scrollToTop();
+            return;
+        }
+    }
+
+    $("#form_cronJob").submit();
 }
