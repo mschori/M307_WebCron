@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 
 function resetForm() {
+    $("#job_id").val('');
     $("#title").val('');
     $("#title").removeClass('is-valid').removeClass('is-invalid');
     $("#url").removeClass('is-valid').removeClass('is-invalid');
@@ -144,8 +145,12 @@ function submit_check() {
         type: "POST",
         data: form_serializer.serialize(),
         success: function (response) {
-            show_alert_success('CronJob erfolgreich eingetragen/aktualisiert!')
-            resetForm();
+            if (response !== 'Fail') {
+                show_alert_success('CronJob erfolgreich eingetragen/aktualisiert!')
+                resetForm();
+            } else {
+                show_alert_danger('Error: CronJob konnte nicht eingetragen/aktualisiert werden!')
+            }
         },
         error: function (response) {
             show_alert_danger('Error: CronJob konnte nicht eingetragen/aktualisiert werden!')
@@ -161,7 +166,47 @@ function loadJob() {
         type: "POST",
         data: form_serializer.serialize(),
         success: function (response) {
-
+            if (response !== 'Fail') {
+                let job = response[0]['fields'];
+                $("#job_id").val(response[0]['pk']);
+                $("#title").val(job['title']);
+                $("#url").val(job['url']);
+                if (job['auth_enabled']) {
+                    $("#authenticationToggle").prop('checked', true);
+                    toggleAuthentication();
+                    $("#username").val(job['auth_user']);
+                    $("#password").val(job['auth_pw']);
+                } else {
+                    $("#authenticationToggle").prop('checked', false);
+                }
+                $("#custom").prop('checked', true);
+                let cron_norm = job['exec_minute'] + ' ' + job['exec_hour'] + ' ' + job['exec_day'] + ' ' + job['exec_month'] + ' ' + job['exec_weekday'];
+                $("#custom_input").val(cron_norm);
+                if (job['allert_failed']) {
+                    $("#alert_failed").prop('checked', true);
+                } else {
+                    $("#alert_failed").prop('checked', false);
+                }
+                if (job['allert_success_after_failed']) {
+                    $("#alert_success_after_failed").prop('checked', true);
+                } else {
+                    $("#alert_success_after_failed").prop('checked', false);
+                }
+                if (job['allert_too_much_fails']) {
+                    $("#alert_too_much_fails").prop('checked', true);
+                } else {
+                    $("#alert_too_much_fails").prop('checked', false);
+                }
+                if (job['save_response']) {
+                    $("#save_response").prop('checked', true);
+                } else {
+                    $("#save_response").prop('checked', false);
+                }
+                handleInputExecution();
+                show_alert_success('Job erfolgreich geladen!')
+            } else {
+                show_alert_danger('Error: Job konnte nicht geladen werden!')
+            }
         },
         error: function (response) {
             show_alert_danger('Error: Job konnte nicht geladen werden!')

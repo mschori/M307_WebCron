@@ -47,7 +47,7 @@ def load_cronjob(request):
 @login_required()
 def process_form(request):
     if request.method == "POST":
-        job_id = request.POST['job_id']
+        job_id = request.POST.get('job_id', 0)
         user_id = request.user
         minute = '*'
         hour = '*'
@@ -77,14 +77,14 @@ def process_form(request):
             month = custom_input[3]
             weekday = custom_input[4]
 
-        alert_failed = request.POST.get('alert_failed', 0)
-        alert_success_after_failed = request.POST.get('alert_success_after_failed', 0)
-        alert_too_much_fails = request.POST.get('alert_too_much_fails', 0)
-        save_response = request.POST.get('save_response', 0)
+        alert_failed = request.POST.get('alert_failed', False)
+        alert_success_after_failed = request.POST.get('alert_success_after_failed', False)
+        alert_too_much_fails = request.POST.get('alert_too_much_fails', False)
+        save_response = request.POST.get('save_response', False)
 
         cronjob_entry = CronJob()
 
-        if job_id != 'none':
+        if job_id != 0:
             cronjob_entry.id = job_id
 
         cronjob_entry.creater = user_id
@@ -106,7 +106,6 @@ def process_form(request):
         try:
             cronjob_entry.save()
             return HttpResponse('Success')
-
         except:
             return HttpResponse('Fail')
     else:

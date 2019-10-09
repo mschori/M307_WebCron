@@ -17,9 +17,6 @@
 
     <div class="container mt-1">
 
-
-        <input type="hidden" name="job_id" value="none">
-
         <div>
             <p>Füllen Sie das folgende Formular aus, um einen Cron-Job anzulegen. Es werden sowohl http- als auch
                 https-URLs unterstützt. Falls die URL mit HTTP-Authentifizierung gesichet ist (z.B.
@@ -48,6 +45,7 @@
                         </div>
                         <div class="col">
                             <button type="button" class="btn btn-dark" onclick="loadJob()">Laden</button>
+                            <button type="button" class="btn btn-warning" onclick="resetForm()">Form zurücksetzen (Neuer Eintrag)</button>
                         </div>
                     </div>
                 </div>
@@ -57,6 +55,8 @@
 
         <form action="#" method="post" id="form_cronJob">
             {% csrf_token %}
+
+            <input type="hidden" id="job_id" name="job_id" value="none">
 
             <div class="card mt-3">
                 <div class="card-header">
