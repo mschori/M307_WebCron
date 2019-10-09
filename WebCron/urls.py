@@ -21,7 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup', generator_views.signup, name="signup"),
-    path('', generator_views.index, name="CreateCronJob"),
+    path('', generator_views.index, name="home"),
     path('createcronjob', generator_views.cronjob, name="CreateCronJob"),
     path('process', generator_views.process_form, name="ProcessForm"),
+    path('load', generator_views.load_cronjob, name="LoadForm"),
 ]

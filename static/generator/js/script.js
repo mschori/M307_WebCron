@@ -94,7 +94,7 @@ function show_alert_success(message) {
 function fadeOutAlerts() {
     let alerts = $("#alerts").children();
 
-    $(alerts).each(function() {
+    $(alerts).each(function () {
         $(this).delay(5000).fadeOut(1000);
     });
 }
@@ -149,6 +149,22 @@ function submit_check() {
         },
         error: function (response) {
             show_alert_danger('Error: CronJob konnte nicht eingetragen/aktualisiert werden!')
+        }
+    });
+}
+
+function loadJob() {
+    let form_serializer = $("#form_loadjob");
+
+    $.ajax({
+        url: "load",
+        type: "POST",
+        data: form_serializer.serialize(),
+        success: function (response) {
+
+        },
+        error: function (response) {
+            show_alert_danger('Error: Job konnte nicht geladen werden!')
         }
     });
 }

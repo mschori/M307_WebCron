@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class CronJob(models.Model):
+    creater = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     title = models.CharField(max_length=255, null=False, default='')
     url = models.URLField(max_length=255, null=False, default='')
     auth_enabled = models.BooleanField(default=False)

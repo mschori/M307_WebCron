@@ -27,25 +27,37 @@
 
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
+                <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if request.path == '/createcronjob' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'CreateCronJob' %}">Create Cronjob</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if request.path == '/testcronjob' %}active{% endif %}">
                     <a class="nav-link" href="#">Test Cronjobs</a>
                 </li>
             </ul>
         </div>
-
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-            </ul>
-        </div>
+        {% if user.is_authenticated %}
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
     </nav>
 
     <div class="container mt-5">
