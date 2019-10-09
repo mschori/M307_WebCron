@@ -14,7 +14,7 @@
     <script src="{% static '/generator/js/bootstrap.min.js' %}"></script>
     <script src="{% static '/generator/js/script.js' %}"></script>
 
-    <title>WebCron</title>
+    <title>{% block head_title %}{% endblock %}</title>
 </head>
 <header>
 
@@ -49,7 +49,7 @@
     </nav>
 
     <div class="container mt-5">
-        <h1 class="disabled">{% block head_title %}{% endblock %}</h1>
+        <h1 class="disabled mb-5">{% block title %}{% endblock %}</h1>
     </div>
 </header>
 
