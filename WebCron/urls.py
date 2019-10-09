@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from Generator import views as generator_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/signup', generator_views.signup, name="signup"),
+    path('accounts/login', generator_views.signup, name="login"),
     path('', generator_views.index, name="CreateCronJob"),
-    path('process', generator_views.process_form, name="ProcessForm")
+    path('createcronjob', generator_views.cronjob, name="CreateCronJob"),
+    path('process', generator_views.process_form, name="ProcessForm"),
 ]
