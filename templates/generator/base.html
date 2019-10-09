@@ -43,15 +43,18 @@
                 Titel und Adresse
             </div>
             <div class="card-body">
-                <input type="text" placeholder="Mein Cron-Job" id="title" class="form-control" name="title" required>
-                <input type="text" placeholder="http://" id="url" class="form-control mt-3" name="url" required>
+                <input type="text" placeholder="Mein Cron-Job" id="title" class="form-control" name="title"
+                       value="ABCDEFG">
+                <input type="text" placeholder="http://" id="url" class="form-control mt-3" name="url"
+                       value="http://schori-ict.ch">
             </div>
         </div>
 
         <div class="card mt-3">
             <div class="card-header">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="authenticationToggle"
+                    <input type="checkbox" class="custom-control-input" id="authenticationToggle" name="auth_enable"
+                           value="1"
                            onclick="toggleAuthentication()">
                     <label class="custom-control-label" for="authenticationToggle">Erfordert
                         HTTP-Authentifizierung</label>
@@ -102,7 +105,7 @@
                         <input type="number" id="monthly_day" name="monthly_day" class="form-control-sm ml-3 mr-3"
                                style="width: 60px;" min="1" max="30" value="1">
                         des Monats um
-                        <input type="number" id="monthly_hour" name="monthly_minutes" class="form-control-sm ml-3 mr-3"
+                        <input type="number" id="monthly_hour" name="monthly_hour" class="form-control-sm ml-3 mr-3"
                                style="width: 60px;" min="0" max="23" value="0">
                         :
                         <input type="number" id="monthly_minutes" name="monthly_minutes" class="form-control-sm ml-3"
@@ -128,18 +131,18 @@
             </div>
             <div class="card-body">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="alert_failed" name="alert_failed">
+                    <input type="checkbox" class="custom-control-input" id="alert_failed" name="alert_failed" value="1">
                     <label class="custom-control-label" for="alert_failed">Fehlschlag des Jobs</label>
                 </div>
                 <div class="custom-control custom-switch mt-2">
                     <input type="checkbox" class="custom-control-input" id="alert_success_after_failed"
-                           name="alert_success_after_failed">
+                           name="alert_success_after_failed" value="1">
                     <label class="custom-control-label" for="alert_success_after_failed">erfolgreichem Abruf nach
                         vorherigem Fehlschlag</label>
                 </div>
                 <div class="custom-control custom-switch mt-2">
                     <input type="checkbox" class="custom-control-input" id="alert_too_much_fails"
-                           name="alert_too_much_fails">
+                           name="alert_too_much_fails" value="1">
                     <label class="custom-control-label" for="alert_too_much_fails">automatischer Deaktivierung wegen zu
                         vieler Fehlschläge</label>
                 </div>
@@ -152,7 +155,8 @@
             </div>
             <div class="card-body">
                 <div class="custom-control custom-switch mt-2">
-                    <input type="checkbox" class="custom-control-input" id="save_response" name="save_response">
+                    <input type="checkbox" class="custom-control-input" id="save_response" name="save_response"
+                           value="1">
                     <label class="custom-control-label" for="save_response">Antwort speichern</label>
                 </div>
             </div>

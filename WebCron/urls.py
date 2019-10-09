@@ -20,4 +20,5 @@ from Generator import views as generator_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', generator_views.index, name="CreateCronJob"),
+    path('process', generator_views.process_form, name="ProcessForm")
 ]
