@@ -1,5 +1,11 @@
 $(document).ready(function () {
     resetForm();
+
+    $(".radioButton").on('change', function () {
+        let radioValue = $(this).val();
+        $('.radioInputButton').prop('disabled', true);
+        $('.' + radioValue).prop('disabled', false);
+    });
 });
 
 function reloadPage() {
@@ -16,13 +22,12 @@ function resetForm(withAlert = false) {
     $("#password").val('');
     $("#custom_input").val('');
     $("#authenticationToggle").prop("checked", false);
-    $("#minutely").prop("checked", true);
+    $("#custom").prop("checked", true);
     $("#alert_failed").prop("checked", false);
     $("#alert_success_after_failed").prop("checked", false);
     $("#alert_too_much_fails").prop("checked", false);
     $("#save_response").prop("checked", false);
 
-    handleInputExecution();
     if (withAlert) {
         show_alert_success('Form erfolgreich zurückgesetzt!');
     }
@@ -32,6 +37,7 @@ function toggleAuthentication() {
     $("#authentication").toggle();
 }
 
+/*
 function handleInputExecution() {
     if ($('#minutely').is(':checked')) {
         $('#minutely_minutes').prop('disabled', false);
@@ -70,6 +76,7 @@ function handleInputExecution() {
         $('#custom_input').prop('disabled', false);
     }
 }
+*/
 
 function show_alert_danger(message) {
     $("#alerts").html(
@@ -187,7 +194,7 @@ function loadJob() {
                     $("#authenticationToggle").prop('checked', false);
                 }
                 $("#custom").prop('checked', true);
-                let cron_norm = job['exec_minute'] + ' ' + job['exec_hour'] + ' ' + job['exec_day'] + ' ' + job['exec_month'] + ' ' + job['exec_weekday'];
+                let cron_norm = job['execute_interval'];
                 $("#custom_input").val(cron_norm);
                 if (job['allert_failed']) {
                     $("#alert_failed").prop('checked', true);
@@ -209,7 +216,6 @@ function loadJob() {
                 } else {
                     $("#save_response").prop('checked', false);
                 }
-                handleInputExecution();
                 show_alert_success('Job erfolgreich geladen!')
             } else {
                 show_alert_danger('Error: Job konnte nicht geladen werden!')

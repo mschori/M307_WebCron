@@ -108,44 +108,40 @@
                 <div class="card-body">
                     <div class="ml-3">
                         <div class="row align-items-center">
-                            <input type="radio" id="minutely" name="execute" value="minutely"
-                                   onchange="handleInputExecution()">
+                            <input type="radio" id="minutely" name="execute" value="minutely" class="radioButton">
                             <label for="minutely" class="ml-1 mt-1">Alle</label>
                             <input type="number" id="minutely_minutes" name="minutely_minutes"
-                                   class="form-control-sm ml-3"
+                                   class="form-control-sm ml-3 radioInputButton minutely"
                                    style="width: 60px;" min="0" max="59" value="0">
                             <label for="minutely_minutes" class="mt-1 ml-2">Minute(n)</label>
                         </div>
                         <div class="row align-items-center">
-                            <input type="radio" id="daily" name="execute" value="daily"
-                                   onchange="handleInputExecution()">
+                            <input type="radio" id="daily" name="execute" value="daily" class="radioButton">
                             <label for="daily" class="ml-1 mt-1">Jeden Tag um</label>
-                            <input type="number" id="daily_hour" name="daily_hour" class="form-control-sm ml-3 mr-3"
+                            <input type="number" id="daily_hour" name="daily_hour" class="form-control-sm ml-3 mr-3 radioInputButton daily"
                                    style="width: 60px;" min="0" max="23" value="0">
                             :
-                            <input type="number" id="daily_minutes" name="daily_minutes" class="form-control-sm ml-3"
+                            <input type="number" id="daily_minutes" name="daily_minutes" class="form-control-sm ml-3 radioInputButton daily"
                                    style="width: 60px;" min="0" max="59" value="0">
                         </div>
                         <div class="row align-items-center">
-                            <input type="radio" id="monthly" name="execute" value="monthly"
-                                   onchange="handleInputExecution()">
+                            <input type="radio" id="monthly" name="execute" value="monthly" class="radioButton">
                             <label for="monthly" class="ml-1 mt-1">Immer am</label>
-                            <input type="number" id="monthly_day" name="monthly_day" class="form-control-sm ml-3 mr-3"
+                            <input type="number" id="monthly_day" name="monthly_day" class="form-control-sm ml-3 mr-3 radioInputButton monthly"
                                    style="width: 60px;" min="1" max="30" value="1">
                             des Monats um
-                            <input type="number" id="monthly_hour" name="monthly_hour" class="form-control-sm ml-3 mr-3"
+                            <input type="number" id="monthly_hour" name="monthly_hour" class="form-control-sm ml-3 mr-3 radioInputButton monthly"
                                    style="width: 60px;" min="0" max="23" value="0">
                             :
                             <input type="number" id="monthly_minutes" name="monthly_minutes"
-                                   class="form-control-sm ml-3"
+                                   class="form-control-sm ml-3 radioInputButton monthly"
                                    style="width: 60px;" min="0" max="59" value="0">
                         </div>
                         <div class="row align-items-center">
-                            <input type="radio" id="custom" name="execute" value="custom"
-                                   onchange="handleInputExecution()">
+                            <input type="radio" id="custom" name="execute" value="custom" class="radioButton">
                             <label for="custom" class="ml-1 mt-1">Benutzerdefiniert</label>
                             <div id="customInput">
-                                <input type="text" id="custom_input" name="custom_input" class="form-control-sm ml-3"
+                                <input type="text" id="custom_input" name="custom_input" class="form-control-sm ml-3 radioInputButton custom"
                                        placeholder="0 1 1-7 12 1">
                                 <span class="ml-2 font-italic">Bitte <a href="https://de.wikipedia.org/wiki/Cron"
                                                                         target="_blank">CronTab-Norm</a> verwenden!</span>
