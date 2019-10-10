@@ -34,8 +34,8 @@
                 <li class="nav-item {% if request.path == '/createcronjob' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'CreateCronJob' %}">Create Cronjob</a>
                 </li>
-                <li class="nav-item {% if request.path == '/testcronjob' %}active{% endif %}">
-                    <a class="nav-link" href="#">Test Cronjobs</a>
+                <li class="nav-item {% if request.path == '/executecronjobs' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'ExecuteCronJobs' %}">Execute Cronjobs</a>
                 </li>
             </ul>
         </div>

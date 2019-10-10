@@ -1,0 +1,26 @@
+{% extends 'generator/base.html' %}
+{% block head_title %}
+    Execute CronJobs
+{% endblock %}
+
+{% block title %}
+    Execute CronJobs
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-4" id="alerts">
+    </div>
+
+    <form action="#" id="execute_cronjobs" method="post">
+        {% csrf_token %}
+    </form>
+
+    <div class="container">
+
+        <p>Mit dem folgenden Button werden alle erfassten Cronjobs ausgeführt.</p>
+        <button type="button" class="btn btn-dark mt-2" onclick="executeCronJobs()">Execute CronJobs</button>
+
+    </div>
+
+{% endblock %}

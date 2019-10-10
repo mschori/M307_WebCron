@@ -5,7 +5,9 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from .models import CronJob
+from .models import CronJobResponses
 from passlib.hash import pbkdf2_sha256
+import requests
 
 
 def index(request):
@@ -102,3 +104,43 @@ def process_form(request):
             return HttpResponse('Fail')
     else:
         return HttpResponse('Fail')
+
+
+@login_required()
+def execute_cronjobs(request):
+    return render(request, 'generator/executecronjobs.html')
+
+
+@login_required()
+def testing(request):
+    entrys = CronJob.objects.all()
+
+    try:
+        for entry in entrys:
+            url = entry.url
+            headers = {'content-type': 'text/html'}
+            response = requests.get(url, headers=headers).content
+
+            if entry.save_response:
+                response_entry = CronJobResponses()
+                response_entry.cronjob = entry.id
+                response_entry.cronjob_title = entry.title
+                response_entry.url = entry.url
+                response_entry.response = response
+                response_entry.save()
+        return HttpResponse('Success')
+
+    except:
+        return HttpResponse('Fail')
+
+
+def test01(request):
+    return render(request, 'generator/test01.html')
+
+
+def test02(request):
+    return render(request, 'generator/test02.html')
+
+
+def test03(request):
+    return render(request, 'generator/test03.html')

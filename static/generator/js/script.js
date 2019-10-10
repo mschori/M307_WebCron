@@ -220,3 +220,23 @@ function loadJob() {
         }
     });
 }
+
+function executeCronJobs() {
+    let form_serializer = $("#execute_cronjobs");
+
+    $.ajax({
+        url: "testing",
+        type: "POST",
+        data: form_serializer.serialize(),
+        success: function (response) {
+            if (response !== 'Fail') {
+                show_alert_success('Alle CronJobs wurden ausgeführt!')
+            } else {
+                show_alert_danger('Error: CronJobs konnten nicht ausgeführt werden!')
+            }
+        },
+        error: function (response) {
+            show_alert_danger('Error: CronJobs konnten nicht ausgeführt werden!')
+        }
+    });
+}

@@ -25,4 +25,9 @@ urlpatterns = [
     path('createcronjob', generator_views.cronjob, name="CreateCronJob"),
     path('process', generator_views.process_form, name="ProcessForm"),
     path('load', generator_views.load_cronjob, name="LoadForm"),
+    path('executecronjobs', generator_views.execute_cronjobs, name="ExecuteCronJobs"),
+    path('testing', generator_views.testing, name="testing"),
+    path('test01', generator_views.test01, name="Test01"),
+    path('test02', generator_views.test02, name="Test02"),
+    path('test03', generator_views.test03, name="Test03"),
 ]

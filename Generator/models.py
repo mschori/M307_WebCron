@@ -10,14 +10,18 @@ class CronJob(models.Model):
     auth_user = models.CharField(max_length=255, null=True)
     auth_pw = models.CharField(max_length=255, null=True)
     execute_interval = models.CharField(max_length=255, null=False, default='* * * * *')
-    # exec_minute = models.CharField(max_length=255, null=False, default='')
-    # exec_hour = models.CharField(max_length=255, null=False, default='')
-    # exec_day = models.CharField(max_length=255, null=False, default='')
-    # exec_month = models.CharField(max_length=255, null=False, default='')
-    # exec_weekday = models.CharField(max_length=255, null=False, default='')
     allert_failed = models.BooleanField(default=False)
     allert_success_after_failed = models.BooleanField(default=False)
     allert_too_much_fails = models.BooleanField(default=False)
     save_response = models.BooleanField(default=True)
+
+
+class CronJobResponses(models.Model):
+    # cronjob = models.ForeignKey(CronJob, on_delete=models.CASCADE, null=False)
+    cronjob = models.IntegerField(null=False)
+    # date = models.DateTimeField(auto_now=True)
+    cronjob_title = models.CharField(max_length=255, null=False)
+    url = models.CharField(max_length=255, null=False)
+    response = models.CharField(max_length=255, null=False)
 
 
