@@ -12,8 +12,22 @@
     <div class="container">
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-dark">Login</button>
+
+            <div class="container">
+                <div class="row">
+                    <label for="username">Benutzername</label>
+                </div>
+                <div class="row">
+                    {{ form.username }}
+                </div>
+                <div class="row">
+                    <label for="password">Passwort</label>
+                </div>
+                <div class="row">
+                    {{ form.password }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark mt-4">Login</button>
         </form>
     </div>
 

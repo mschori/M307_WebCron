@@ -31,3 +31,5 @@ urlpatterns = [
     path('test02', generator_views.test02, name="Test02"),
     path('test03', generator_views.test03, name="Test03"),
 ]
+
+handler404 = generator_views.error_404

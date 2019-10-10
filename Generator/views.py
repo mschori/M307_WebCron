@@ -14,6 +14,11 @@ def index(request):
     return render(request, 'generator/home.html')
 
 
+def error_404(request, exception):
+    data = {"name": "ThePythonDjango.com"}
+    return render(request, 'generator/error404.html', data)
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
