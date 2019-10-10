@@ -17,8 +17,7 @@ class CronJob(models.Model):
 
 
 class CronJobResponses(models.Model):
-    # cronjob = models.ForeignKey(CronJob, on_delete=models.CASCADE, null=False)
-    cronjob = models.IntegerField(null=False)
+    cronjob = models.ForeignKey(CronJob, on_delete=models.CASCADE, null=False)
     date = models.DateTimeField(auto_now=True)
     cronjob_title = models.CharField(max_length=255, null=False)
     url = models.CharField(max_length=255, null=False)

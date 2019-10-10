@@ -62,8 +62,8 @@ def process_form(request):
         auth_enable = request.POST.get('auth_enable', False)
         auth_user = request.POST.get('auth_user', 'empty')
         auth_password = request.POST.get('auth_password', 'empty')
-        if auth_password != 'empty':
-            auth_password = pbkdf2_sha256.encrypt(auth_password, rounds=200000, salt_size=16)
+        # if auth_password != 'empty':
+        # auth_password = pbkdf2_sha256.encrypt(auth_password, rounds=200000, salt_size=16)
         execute = request.POST['execute']
         if execute == 'minutely':
             minute = request.POST['minutely_minutes']
@@ -128,7 +128,8 @@ def testing(request):
 
             if entry.save_response:
                 response_entry = CronJobResponses()
-                response_entry.cronjob = entry.id
+                cronjob_object = CronJob.objects.get(id=entry.id)
+                response_entry.cronjob = cronjob_object
                 response_entry.cronjob_title = entry.title
                 response_entry.url = entry.url
                 response_entry.response = response

@@ -1,11 +1,5 @@
 $(document).ready(function () {
     resetForm();
-
-    $(".radioButton").on('change', function () {
-        let radioValue = $(this).val();
-        $('.radioInputButton').prop('disabled', true);
-        $('.' + radioValue).prop('disabled', false);
-    });
 });
 
 function reloadPage() {
@@ -21,8 +15,12 @@ function resetForm(withAlert = false) {
     $("#username").val('');
     $("#password").val('');
     $("#custom_input").val('');
-    $("#authenticationToggle").prop("checked", false);
+    if ($("#authenticationToggle").is(':checked')) {
+        $("#authenticationToggle").prop("checked", false);
+        $("#authentication").toggle();
+    }
     $("#custom").prop("checked", true);
+    handleInputExecution('custom');
     $("#alert_failed").prop("checked", false);
     $("#alert_success_after_failed").prop("checked", false);
     $("#alert_too_much_fails").prop("checked", false);
@@ -37,46 +35,10 @@ function toggleAuthentication() {
     $("#authentication").toggle();
 }
 
-/*
-function handleInputExecution() {
-    if ($('#minutely').is(':checked')) {
-        $('#minutely_minutes').prop('disabled', false);
-        $('#daily_hour').prop('disabled', true);
-        $('#daily_minutes').prop('disabled', true);
-        $('#monthly_day').prop('disabled', true);
-        $('#monthly_hour').prop('disabled', true);
-        $('#monthly_minutes').prop('disabled', true);
-        $('#custom_input').prop('disabled', true);
-    }
-    if ($('#daily').is(':checked')) {
-        $('#minutely_minutes').prop('disabled', true);
-        $('#daily_hour').prop('disabled', false);
-        $('#daily_minutes').prop('disabled', false);
-        $('#monthly_day').prop('disabled', true);
-        $('#monthly_hour').prop('disabled', true);
-        $('#monthly_minutes').prop('disabled', true);
-        $('#custom_input').prop('disabled', true);
-    }
-    if ($('#monthly').is(':checked')) {
-        $('#minutely_minutes').prop('disabled', true);
-        $('#daily_hour').prop('disabled', true);
-        $('#daily_minutes').prop('disabled', true);
-        $('#monthly_day').prop('disabled', false);
-        $('#monthly_hour').prop('disabled', false);
-        $('#monthly_minutes').prop('disabled', false);
-        $('#custom_input').prop('disabled', true);
-    }
-    if ($('#custom').is(':checked')) {
-        $('#minutely_minutes').prop('disabled', true);
-        $('#daily_hour').prop('disabled', true);
-        $('#daily_minutes').prop('disabled', true);
-        $('#monthly_day').prop('disabled', true);
-        $('#monthly_hour').prop('disabled', true);
-        $('#monthly_minutes').prop('disabled', true);
-        $('#custom_input').prop('disabled', false);
-    }
+function handleInputExecution(input_class) {
+    $('.radioInputButton').prop('disabled', true);
+    $("." + input_class).prop('disabled', false);
 }
-*/
 
 function show_alert_danger(message) {
     $("#alerts").html(
@@ -151,6 +113,7 @@ function submit_check() {
 
     if (!form.checkValidity()) {
         scrollToTop();
+        show_alert_danger('Prüfe deine Eingaben!');
         return;
     }
 
@@ -194,6 +157,7 @@ function loadJob() {
                     $("#authenticationToggle").prop('checked', false);
                 }
                 $("#custom").prop('checked', true);
+                handleInputExecution('custom');
                 let cron_norm = job['execute_interval'];
                 $("#custom_input").val(cron_norm);
                 if (job['allert_failed']) {
