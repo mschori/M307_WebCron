@@ -2,8 +2,12 @@ $(document).ready(function () {
     resetForm();
 });
 
-function resetForm() {
-    $("#job_id").val('');
+function reloadPage() {
+    location.reload();
+}
+
+function resetForm(withAlert = false) {
+    $("#job_id").val('0');
     $("#title").val('');
     $("#title").removeClass('is-valid').removeClass('is-invalid');
     $("#url").removeClass('is-valid').removeClass('is-invalid');
@@ -19,6 +23,9 @@ function resetForm() {
     $("#save_response").prop("checked", false);
 
     handleInputExecution();
+    if (withAlert) {
+        show_alert_success('Form erfolgreich zurückgesetzt!');
+    }
 }
 
 function toggleAuthentication() {

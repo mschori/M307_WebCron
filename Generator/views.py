@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
-from django.http import JsonResponse
 from .models import CronJob
+from passlib.hash import pbkdf2_sha256
 
 
 def index(request):
@@ -49,33 +49,29 @@ def process_form(request):
     if request.method == "POST":
         job_id = request.POST.get('job_id', 0)
         user_id = request.user
-        minute = '*'
-        hour = '*'
-        day_month = '*'
-        month = '*'
-        weekday = '*'
+        execute_interval = '* * * * *'
         title = request.POST['title']
         url = request.POST['url']
         auth_enable = request.POST.get('auth_enable', False)
         auth_user = request.POST.get('auth_user', 'empty')
         auth_password = request.POST.get('auth_password', 'empty')
+        if auth_password != 'empty':
+            auth_password = pbkdf2_sha256.encrypt(auth_password, rounds=200000, salt_size=16)
         execute = request.POST['execute']
         if execute == 'minutely':
             minute = request.POST['minutely_minutes']
+            execute_interval = minute + ' * * * *'
         elif execute == 'daily':
             minute = request.POST['daily_minutes']
             hour = request.POST['daily_hour']
+            execute_interval = minute + ' ' + hour + ' * * *'
         elif execute == 'monthly':
             minute = request.POST['monthly_minutes']
             hour = request.POST['monthly_hour']
             day_month = request.POST['monthly_day']
+            execute_interval = minute + ' ' + hour + ' ' + day_month + ' * *'
         elif execute == 'custom':
-            custom_input = request.POST['custom_input'].split(' ')
-            minute = custom_input[0]
-            hour = custom_input[1]
-            day_month = custom_input[2]
-            month = custom_input[3]
-            weekday = custom_input[4]
+            execute_interval = request.POST['custom_input']
 
         alert_failed = request.POST.get('alert_failed', False)
         alert_success_after_failed = request.POST.get('alert_success_after_failed', False)
@@ -84,7 +80,7 @@ def process_form(request):
 
         cronjob_entry = CronJob()
 
-        if job_id != 0:
+        if int(job_id) > 0:
             cronjob_entry.id = job_id
 
         cronjob_entry.creater = user_id
@@ -93,11 +89,7 @@ def process_form(request):
         cronjob_entry.auth_enabled = auth_enable
         cronjob_entry.auth_user = auth_user
         cronjob_entry.auth_pw = auth_password
-        cronjob_entry.exec_minute = minute
-        cronjob_entry.exec_hour = hour
-        cronjob_entry.exec_day = day_month
-        cronjob_entry.exec_month = month
-        cronjob_entry.exec_weekday = weekday
+        cronjob_entry.execute_interval = execute_interval
         cronjob_entry.allert_failed = alert_failed
         cronjob_entry.allert_success_after_failed = alert_success_after_failed
         cronjob_entry.allert_too_much_fails = alert_too_much_fails
