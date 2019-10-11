@@ -1,11 +1,14 @@
+// Execute on pageload
 $(document).ready(function () {
     resetForm();
 });
 
+// Reload page
 function reloadPage() {
     location.reload();
 }
 
+// Reset whole form
 function resetForm(withAlert = false) {
     $("#job_id").val('0');
     $("#title").val('');
@@ -31,6 +34,7 @@ function resetForm(withAlert = false) {
     }
 }
 
+// Toggle authentication block
 function toggleAuthentication() {
     $("#authentication").toggle();
 
@@ -43,11 +47,13 @@ function toggleAuthentication() {
     }
 }
 
+// Check selected radio button .then disable or enable input fields
 function handleInputExecution(input_class) {
     $('.radioInputButton').prop('disabled', true);
     $("." + input_class).prop('disabled', false);
 }
 
+// show alert message in red
 function show_alert_danger(message) {
     $("#alerts").html(
         '<div class="alert alert-danger alert-dismissable">' +
@@ -62,6 +68,7 @@ function show_alert_danger(message) {
     fadeOutAlerts();
 }
 
+// show alert message in green
 function show_alert_success(message) {
     $("#alerts").html(
         '<div class="alert alert-success alert-dismissable">' +
@@ -76,6 +83,7 @@ function show_alert_success(message) {
     fadeOutAlerts();
 }
 
+// Fade out alerts
 function fadeOutAlerts() {
     let alerts = $("#alerts").children();
 
@@ -84,10 +92,12 @@ function fadeOutAlerts() {
     });
 }
 
+// Scroll automaticly to top of page
 function scrollToTop() {
     $("html, body").animate({scrollTop: 0}, "slow");
 }
 
+// Check all inputs and submit or throw error
 function submit_check() {
     let url = $("#url").val();
     let regexUrl = /^http[s]?:\/\/[\S]+[.][\S]+$/;
@@ -143,6 +153,7 @@ function submit_check() {
     });
 }
 
+// Load selected job
 function loadJob() {
     let form_serializer = $("#form_loadjob");
 
@@ -199,6 +210,7 @@ function loadJob() {
     });
 }
 
+// execute cronjobs
 function executeCronJobs() {
     let form_serializer = $("#execute_cronjobs");
 

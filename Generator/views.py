@@ -10,15 +10,18 @@ from passlib.hash import pbkdf2_sha256
 import requests
 
 
+# home view
 def index(request):
     return render(request, 'generator/home.html')
 
 
+# error404 view
 def error_404(request, exception):
     data = {"name": "ThePythonDjango.com"}
     return render(request, 'generator/error404.html', data)
 
 
+# signup view
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -34,12 +37,14 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
+# cronjob view
 @login_required()
 def cronjob(request):
     jobs = CronJob.objects.filter().only("title")
     return render(request, 'generator/cronjob.html', {'jobs': jobs})
 
 
+# load cronjob and return it
 @login_required()
 def load_cronjob(request):
     if request.method == "POST":
@@ -51,6 +56,7 @@ def load_cronjob(request):
         return HttpResponse('Fail')
 
 
+# process cronjob-form and save to database
 @login_required()
 def process_form(request):
     if request.method == "POST":
@@ -110,11 +116,13 @@ def process_form(request):
         return HttpResponse('Fail')
 
 
+# execute_cronjobs view
 @login_required()
 def execute_cronjobs(request):
     return render(request, 'generator/executecronjobs.html')
 
 
+# execute cronjobs/test
 @login_required()
 def testing(request):
     entrys = CronJob.objects.all()
@@ -139,13 +147,16 @@ def testing(request):
         return HttpResponse('Fail')
 
 
+# test01 view
 def test01(request):
     return render(request, 'generator/test01.html')
 
 
+# test02 view
 def test02(request):
     return render(request, 'generator/test02.html')
 
 
+# test03 view
 def test03(request):
     return render(request, 'generator/test03.html')

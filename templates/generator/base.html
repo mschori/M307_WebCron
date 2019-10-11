@@ -7,18 +7,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Styles -->
     <link rel="stylesheet" href="{% static 'generator/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'generator/css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Scripts -->
     <script src="{% static '/generator/js/jQuery.min.js' %}"></script>
     <script src="{% static '/generator/js/bootstrap.min.js' %}"></script>
     <script src="{% static '/generator/js/script.js' %}"></script>
 
     <title>{% block head_title %}{% endblock %}</title>
 </head>
-<header>
 
+<header>
+    <!-- Navigation bar -->
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="{% url 'home' %}"><i class="fa fa-clock-o"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -71,6 +74,7 @@
 
 <body>
 {% block content %}
+    <!-- Page-Content -->
 {% endblock %}
 </body>
 
