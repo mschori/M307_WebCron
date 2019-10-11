@@ -33,6 +33,14 @@ function resetForm(withAlert = false) {
 
 function toggleAuthentication() {
     $("#authentication").toggle();
+
+    if ($("#authenticationToggle").is(':checked')) {
+        $("#username").prop('required', true);
+        $("#password").prop('required', true);
+    } else {
+        $("#username").prop('required', false);
+        $("#password").prop('required', false);
+    }
 }
 
 function handleInputExecution(input_class) {

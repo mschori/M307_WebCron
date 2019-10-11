@@ -55,14 +55,13 @@ def load_cronjob(request):
 def process_form(request):
     if request.method == "POST":
         job_id = request.POST.get('job_id', 0)
-        user_id = request.user
+        user_id = request.user.id
         execute_interval = '* * * * *'
         title = request.POST['title']
         url = request.POST['url']
         auth_enable = request.POST.get('auth_enable', False)
         auth_user = request.POST.get('auth_user', 'empty')
         auth_password = request.POST.get('auth_password', 'empty')
-        # if auth_password != 'empty':
         # auth_password = pbkdf2_sha256.encrypt(auth_password, rounds=200000, salt_size=16)
         execute = request.POST['execute']
         if execute == 'minutely':
